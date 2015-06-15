@@ -12,8 +12,3 @@ Package.on_use(function(api) {
 	api.add_files('server.coffee', 'server');
 });
 
-// Package.on_test(function(api) {
-// 	api.use('lepozepo:publish-with-relations');
-
-// 	api.add_files('publish_with_relations_test.coffee', 'server');
-// });
