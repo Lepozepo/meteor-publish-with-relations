@@ -7,31 +7,31 @@ __This package is an updated version of [tmeasday:publish-with-relations](https:
 #### `this.relations(ops)` (SERVER SIDE)
 Used inside a ```Meteor.publish()``` function to define db relationships.
 
-*__ops.collection: (REQUIRED)__  
+* __ops.collection: (REQUIRED)__  
 			The anchor collection from which relations will be made.
 
-*__ops.filter: (OPTIONAL)__  
-	The object that filters the collection. This is the equivalent to _filter_ in _collection_.find(_filter_).
+* __ops.filter: (OPTIONAL)__  
+		The object that filters the collection. This is the equivalent to _filter_ in _collection_.find(_filter_).
 
-*__ops.options: (OPTIONAL)__  
+* __ops.options: (OPTIONAL)__  
 	The object that sorts and limits the collection. This is the equivalent to _options_ in _collection_.find(_filter_,_options_).
 
-*__ops.mappings: (OPTIONAL)__  
+* __ops.mappings: (OPTIONAL)__  
 	An array of objects that maps relationships between collections using ```foreign_key``` and ```key```
 
-*__ops.mappings[].collection: (REQUIRED)__  
+* __ops.mappings[].collection: (REQUIRED)__  
 	Defines the collection that will be associated.
 
-*__ops.mappings[].foreign_key: (DEFAULT:"_id")__  
+* __ops.mappings[].foreign_key: (DEFAULT:"_id")__  
 	Defines the key to associate with at the parent collection.
 
-*__ops.mappings[].key: (DEFAULT:"_id")__  
+* __ops.mappings[].key: (DEFAULT:"_id")__  
 	Defines the key to associate with at the current collection.
 
-*__ops.mappings[].filter: (OPTIONAL)__  
+* __ops.mappings[].filter: (OPTIONAL)__  
 	The object that filters the collection. This is the equivalent to _filter_ in _collection_.find(_filter_).
 
-*__ops.mappings[].options: (OPTIONAL)__  
+* __ops.mappings[].options: (OPTIONAL)__  
 	The object that sorts and limits the collection. This is the equivalent to _options_ in _collection_.find(_filter_,_options_).
 
 ### Sample
