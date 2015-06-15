@@ -8,10 +8,10 @@ __This package is an updated version of [tmeasday:publish-with-relations](https:
 Used inside a ```Meteor.publish()``` function to define db relationships.
 
 * __ops.collection: (REQUIRED)__  
-			The anchor collection from which relations will be made.
+	The anchor collection from which relations will be made.
 
 * __ops.filter: (OPTIONAL)__  
-		The object that filters the collection. This is the equivalent to _filter_ in _collection_.find(_filter_).
+	The object that filters the collection. This is the equivalent to _filter_ in _collection_.find(_filter_).
 
 * __ops.options: (OPTIONAL)__  
 	The object that sorts and limits the collection. This is the equivalent to _options_ in _collection_.find(_filter_,_options_).
