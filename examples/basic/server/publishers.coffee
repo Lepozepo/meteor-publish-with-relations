@@ -1,10 +1,9 @@
-Meteor.publish "things", (v={})->
+Meteor.publish "things", (v={}) ->
 	_.defaults v,
 		filter:{}
 		options:{}
 
-	PWR
-		handle:this
+	@relations
 		collection:Things
 		filter:v.filter
 		options:v.options
@@ -31,9 +30,11 @@ Meteor.publish "things", (v={})->
 			}
 		]
 
+	@ready()
+
+
 Meteor.publish "things_with_subthings", ->
-	PWR
-		handle:this
+	@relations
 		collection:Things
 		filter:{}
 		mappings:[
@@ -41,9 +42,10 @@ Meteor.publish "things_with_subthings", ->
 			collection:SubThings
 		]
 
+	@ready()
+
 Meteor.publish "thing", (thing) ->
-	PWR
-		handle:this
+	@relations
 		collection:Things
 		filter:
 			_id:thing
@@ -52,9 +54,10 @@ Meteor.publish "thing", (thing) ->
 			collection:SubThings
 		]
 
+	@ready()
+
 Meteor.publish "thing_with_depth", (thing) ->
-	PWR
-		handle:this
+	@relations
 		collection:Things
 		filter:
 			_id:thing
@@ -69,6 +72,7 @@ Meteor.publish "thing_with_depth", (thing) ->
 			}
 		]
 
+	@ready()
 
 
 

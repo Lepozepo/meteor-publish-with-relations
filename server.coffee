@@ -1,6 +1,17 @@
-@PWR = (params) ->
-	Meteor.publishWithRelations params
+unless original_publish
+	original_publish = Meteor.publish
 
+	Meteor.publish = (name,func) ->
+		original_publish name, (args...) -> #args... "soaks up" arguments
+			publish = this
+
+			publish.relations = (params) ->
+				_.extend params,
+					handle:publish
+
+				Meteor.publishWithRelations params
+
+			func.apply publish,args
 
 Meteor.publishWithRelations = (params) ->
 	pub = params.handle
@@ -72,7 +83,7 @@ Meteor.publishWithRelations = (params) ->
 						filter: mapFilter
 						options: mapOptions
 						mappings: mapping.mappings
-						_noReady: true
+						# _noReady: true
 			else
 				associations[id][objKey]?.stop()
 				# console.log "mapFilter to publishAssoc:"
@@ -98,8 +109,9 @@ Meteor.publishWithRelations = (params) ->
 			handle.stop() for handle in associations[id]
 			pub.removed(collection._name, id)
 
-	unless params._noReady
-		pub.ready()
+	# No more auto ready, that's annoying
+	# unless params._noReady
+	# 	pub.ready()
 
 	pub.onStop ->
 		for id, association of associations

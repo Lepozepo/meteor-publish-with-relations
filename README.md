@@ -1,17 +1,11 @@
 __BREAKING CHANGES:__
-* ```key``` is now ```foreign_key```
-* ```reverse``` does not exist anymore
-* _Migrating_:
-	* If ```reverse:false``` then replace ```key:yourkey``` with ```foreign_key:yourkey```
+This package does not automatically call the @ready() function anymore, that makes it easier to set up more than one `relationships` method.
 
 __This package is an updated version of [tmeasday:publish-with-relations](https://atmospherejs.com/tmeasday/publish-with-relations) the key difference is support for arrays, nested arrays, a friendlier interface, and some bug fixes__
 
 ### API
-#### Meteor.publishWithRelations(ops) (SERVER SIDE)
-Used inside a ```Meteor.publish()``` function to define relations.
-
-__ops.handle: (REQUIRED)__  
-	Must always be ```this```
+#### this.relations(ops) (SERVER SIDE)
+Used inside a ```Meteor.publish()``` function to define db relationships.
 
 __ops.collection: (REQUIRED)__  
 	The anchor collection from which relations will be made.
@@ -43,27 +37,30 @@ __ops.mappings[].options: (OPTIONAL)__
 ### Sample
 ```coffeescript
 Meteor.publish "things", ->
-	Meteor.publishWithRelations
-		handle:this
-		collection:Things
-		mappings:[
-			{
-				foreign_key:"sub_things.deep_things.deep_thing"
-				collection:DeepThings
-			}
-			{
-				foreign_key:"sub_things.sub_thing"
-				collection:SubThings
-			}
-			{
-				foreign_key:"other_thing"
-				collection:OtherThings
-			}
-			{
-				key:"thing"
-				collection:ReverseThings
-			}
-		]
+	if @userId #only publish when there's a user
+		@relations
+			collection:Things
+			mappings:[
+				{
+					foreign_key:"sub_things.deep_things.deep_thing"
+					collection:DeepThings
+				}
+				{
+					foreign_key:"sub_things.sub_thing"
+					collection:SubThings
+				}
+				{
+					foreign_key:"other_thing"
+					collection:OtherThings
+				}
+				{
+					key:"thing"
+					collection:ReverseThings
+				}
+			]
+
+	# always call ready
+	@ready()
 ```
 
 This will publish all ```Things``` and their respective ```DeepThings```, ```SubThings```, ```OtherThings```, and ```ReverseThings```
