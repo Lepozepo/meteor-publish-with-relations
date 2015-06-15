@@ -1,8 +1,14 @@
+@PWR = (params) ->
+	Meteor.publishWithRelations params
+
+
 Meteor.publishWithRelations = (params) ->
 	pub = params.handle
 	collection = params.collection
 	filter = params.filter or {}
 	options = params.options or {}
+	# console.log "filter:"
+	# console.log filter
 
 	associations = {}
 
@@ -22,6 +28,7 @@ Meteor.publishWithRelations = (params) ->
 			mapOptions = {}
 			_.defaults mapping,
 				key:"_id"
+				foreign_key:"_id"
 
 			objKey = mapping.foreign_key + mapping.key
 
@@ -30,7 +37,7 @@ Meteor.publishWithRelations = (params) ->
 
 			key_map = mapping.foreign_key.split "."
 			if key_map.length > 1
-				if obj[key_map[0]] and _.isArray obj[key_map[0]]
+				if obj[key_map[0]] and _.isArray(obj[key_map[0]])
 					ids = []
 					_.each key_map, (k,i) ->
 						if i is 0 #if start
@@ -56,15 +63,19 @@ Meteor.publishWithRelations = (params) ->
 			_.extend(mapOptions, mapping.options)
 
 			if mapping.mappings
-				Meteor.publishWithRelations
-					handle: pub
-					collection: mapping.collection
-					filter: mapFilter
-					options: mapOptions
-					mappings: mapping.mappings
-					_noReady: true
+				# console.log "mapFilter with mapping.mappings:"
+				# console.log mapFilter
+				if mapFilter #prevent filter from being {} and bringing in everything in the collection in case of null
+					Meteor.publishWithRelations
+						handle: pub
+						collection: mapping.collection
+						filter: mapFilter
+						options: mapOptions
+						mappings: mapping.mappings
+						_noReady: true
 			else
 				associations[id][objKey]?.stop()
+				# console.log "mapFilter to publishAssoc:"
 				# console.log mapFilter
 				if mapFilter
 					associations[id][objKey] =
@@ -76,21 +87,27 @@ Meteor.publishWithRelations = (params) ->
 			pub.added(collection._name, id, fields)
 			associations[id] ?= {}
 			doMapping(id, fields, params.mappings)
+
 		changed: (id, fields) ->
 			_.each fields, (value, key) ->
 				changedMappings = _.where(params.mappings, {foreign_key: key})
 				doMapping(id, fields, changedMappings)
 			pub.changed(collection._name, id, fields)
+
 		removed: (id) ->
 			handle.stop() for handle in associations[id]
 			pub.removed(collection._name, id)
 
-	pub.ready() unless params._noReady
+	unless params._noReady
+		pub.ready()
 
 	pub.onStop ->
 		for id, association of associations
-			handle.stop() for key, handle of association
+			for key, handle of association
+				handle.stop()
+
 		collectionHandle.stop()
+
 
 
 

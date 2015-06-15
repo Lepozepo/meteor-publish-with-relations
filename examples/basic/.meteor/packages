@@ -8,3 +8,9 @@ insecure
 coffeescript
 mquandalle:jade
 lepozepo:publish-with-relations
+nemo64:bootstrap
+less
+
+iron:router
+tmeasday:publish-counts
+meteorhacks:subs-manager

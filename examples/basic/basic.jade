@@ -1,2 +1,28 @@
 template(name="basic")
-	h3 Basic Stuff
+	div#basic.container
+		div.row
+			div.col-xs-12
+				h3.text-center Basic
+
+		br
+		div.row
+			div.col-xs-12
+				nav
+					ul.pagination
+						each pages
+							li
+								a(href="/B/{{this}}") {{this}}
+
+				nav
+					ul.pagination
+						each pages
+							li
+								a(href="/A/{{this}}") {{this}}
+
+		br
+		div.row
+			div.col-xs-12
+				each things
+					p {{name}}
+
+
