@@ -1,10 +1,10 @@
 __BREAKING CHANGES:__
-This package does not automatically call the @ready() function anymore, that makes it easier to set up more than one `relationships` method.
+This package does not automatically call the `@ready()` function anymore, that makes it easier to set up more than one `relationships` method.
 
 __This package is an updated version of [tmeasday:publish-with-relations](https://atmospherejs.com/tmeasday/publish-with-relations) the key difference is support for arrays, nested arrays, a friendlier interface, and some bug fixes__
 
 ### API
-#### this.relations(ops) (SERVER SIDE)
+#### `this.relations(ops)` (SERVER SIDE)
 Used inside a ```Meteor.publish()``` function to define db relationships.
 
 __ops.collection: (REQUIRED)__  
