@@ -1,3 +1,5 @@
+@_ = lodash
+
 @main_subs = new SubsManager
 	cacheLimit: 9999
 	expireIn: 9999

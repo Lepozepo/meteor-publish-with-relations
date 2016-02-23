@@ -28,7 +28,7 @@ iron:url@1.0.7
 jquery@1.11.3_2
 json@1.0.3
 launch-screen@1.0.2
-lepozepo:publish-with-relations@1.2.3
+lepozepo:publish-with-relations@1.2.5
 less@1.0.14
 livedata@1.0.13
 logging@1.0.7
@@ -54,6 +54,7 @@ routepolicy@1.0.5
 session@1.1.0
 spacebars@1.0.6
 spacebars-compiler@1.0.6
+stevezhu:lodash@4.5.0
 templating@1.1.1
 tmeasday:publish-counts@0.3.9
 tracker@1.0.7

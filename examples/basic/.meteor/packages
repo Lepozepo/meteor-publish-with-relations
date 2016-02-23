@@ -14,3 +14,4 @@ less
 iron:router
 tmeasday:publish-counts
 meteorhacks:subs-manager
+stevezhu:lodash
