@@ -48,17 +48,20 @@ Meteor.publishWithRelations = (params) ->
 
 			key_map = mapping.foreign_key.split "."
 			if key_map.length > 1
-				if obj[key_map[0]] and _.isArray(obj[key_map[0]])
+				if obj[key_map[0]]
 					ids = []
 					_.each key_map, (k,i) ->
 						if i is 0 #if start
-							ids = _.pluck obj[k],key_map[i+1]
+							if _.isArray(obj[key_map[0]])
+								ids = _.pluck obj[k],key_map[i+1]
+							else if _.isObject(obj[key_map[0]])
+								ids = [obj[k][key_map[i+1]]]
 
 						else if i isnt key_map.length-1 #if not last
 							ids = _.flatten ids
 							ids = _.pluck ids,key_map[i+1]
 
-					mapFilter[mapping.key] = 
+					mapFilter[mapping.key] =
 						$in:ids
 				else
 					mapFilter = null
